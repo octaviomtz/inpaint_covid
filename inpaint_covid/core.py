@@ -53,8 +53,8 @@ def plot_3d_2(image, image2, threshold=-300, detail_speed=1, detail_speed2=1, fi
     p2 = p2.transpose(1,0,2)
     p2 = p2[:,::-1,:]
 
-    verts, faces, _, _ = measure.marching_cubes(p, threshold, step_size=detail_speed)
-    verts2, faces2, _, _ = measure.marching_cubes(p2, threshold, step_size=detail_speed2)
+    verts, faces, _, _ = measure.marching_cubes_lewiner(p, threshold, step_size=detail_speed)
+    verts2, faces2, _, _ = measure.marching_cubes_lewiner(p2, threshold, step_size=detail_speed2)
 
     fig = plt.figure(figsize=figsize)
     ax = fig.add_subplot(111, projection='3d')

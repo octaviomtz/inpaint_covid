@@ -8,6 +8,14 @@ Replace covid19 lesions in a CT using a unet.
 
 `pip install octaviomtz/inpaint_covid`
 
+or
+
+```python
+# !git clone https://github.com/octaviomtz/inpaint_covid.git
+# !pip install nilearn
+# from inpaint_covid.inpaint_covid import *
+```
+
 ## How to use
 
 ### 0. Imports
@@ -25,30 +33,24 @@ from tensorflow.keras import backend as K
 ### 1. Load and preprocess a CT scan and its masks:
 
 ```python
-path_source = '/mnt/c/Users/octav/Documents/Datasets/COVID-19-20_v2/'
 filename = 'covid19-A-0003_ct.nii.gz'
+# if cloud
+from google.colab import drive
+drive.mount('/content/drive')
+path_source = '/content/drive/My Drive/Datasets/covid19/COVID-19-20_v2/'
+# if local
+path_source = '/mnt/c/Users/octav/Documents/Datasets/COVID-19-20_v2/'
 ct, ct_mask, ct_seg = read_covid_CT_and_mask(path_source, filename)
 ct, ct_mask, ct_seg = normalize_rotate(ct, ct_mask, ct_seg)
 ```
 
 ```python
-print(np.shape(ct_mask))
 plt.imshow(ct[...,100])
-plt.imshow(ct_mask[...,100], alpha=.3)
+plt.imshow(ct_mask[...,100], alpha=.3);
 ```
 
-    (512, 512, 291)
 
-
-
-
-
-    <matplotlib.image.AxesImage at 0x7f4b24951f10>
-
-
-
-
-![png](docs/images/output_8_2.png)
+![png](docs/images/output_10_0.png)
 
 
 ### 2. Use the lung segmentation to use a smaller version of the CT
@@ -69,7 +71,7 @@ plot_3d_2(a, b, .5, detail_speed=8, detail_speed2=8, figsize=(4,5))
 ```
 
 
-![png](docs/images/output_11_0.png)
+![png](docs/images/output_13_0.png)
 
 
 ### 3. Get the masks
@@ -86,22 +88,16 @@ target_mask3 = ct_mask_small.astype(bool)
 SLICE=100
 fig, ax = plt.subplots(2,3,figsize=(10,6))
 ax[0,0].imshow(target_mask[...,SLICE])
-ax[1,0].hist(ct_small[np.where(target_mask!=0)].flatten()); ax[1,0].set_xlim([0,1])
+ax[1,0].hist(ct_small[np.where(target_mask!=0)].flatten()); ax[1,0].set_xlim([0,1]);
 ax[0,1].imshow(target_mask2[...,SLICE])
-ax[1,1].hist(ct_small[np.where(target_mask2!=0)].flatten()); ax[1,1].set_xlim([0,1])
+ax[1,1].hist(ct_small[np.where(target_mask2!=0)].flatten()); ax[1,1].set_xlim([0,1]);
 ax[0,2].imshow(target_mask3[...,SLICE])
-ax[1,2].hist(ct_small[np.where(target_mask3!=0)].flatten()); ax[1,2].set_xlim([0,1])
+ax[1,2].hist(ct_small[np.where(target_mask3!=0)].flatten()); ax[1,2].set_xlim([0,1]);
+plt.tight_layout()
 ```
 
 
-
-
-    (0.0, 1.0)
-
-
-
-
-![png](docs/images/output_14_1.png)
+![png](docs/images/output_16_0.png)
 
 
 ### 4. Inpainting
@@ -187,5 +183,5 @@ plot_4_inpaints(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...
 ```
 
 
-![png](docs/images/output_22_0.png)
+![png](docs/images/output_24_0.png)
 

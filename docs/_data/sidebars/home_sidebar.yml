@@ -11,7 +11,7 @@ entries:
       url: /
     - output: web,pdf
       title: 'inpaint_covid '
-      url: core.html
+      url: unets.html
     output: web
     title: inpaint_covid
   output: web

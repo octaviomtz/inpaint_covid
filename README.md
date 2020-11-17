@@ -144,34 +144,10 @@ predicted_all = []
 epochs_saved = [0]
 previous_epochs = 0
 model = unet5(ct_small)
-opt = tf.keras.optimizers.Adam(lr_value)
+opt = tf.keras.optimizers.Adam(lr_value) 
 loss_masked, mask_used = choose_loss(mask_target, mask_target2, mask_target3, LOSS_USED=0)
 model.compile(optimizer=opt, loss=loss_masked)
 ```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-15-287ad48767cd> in <module>
-          3 epochs_saved = [0]
-          4 previous_epochs = 0
-    ----> 5 model = unet5(ct_small)
-          6 opt = tf.keras.optimizers.Adam(lr_value)
-          7 loss_masked, mask_used = choose_loss(mask_target, mask_target2, mask_target3, LOSS_USED=0)
-
-
-    /mnt/c/Users/octav/Documents/version_control/covid19/inpaint_covid/inpaint_covid/unets.py in unet5(ct_small, ch, g_noise, act_max_value, act_out_max_value)
-         21 # Cell
-         22 def unet5(ct_small, ch=32, g_noise= 0.3, act_max_value = 1, act_out_max_value = 1):
-    ---> 23     IMG_CHANNELS = np.shape(ct_small)[-1]
-         24     inputs = Input(np.shape(ct_small))
-         25     c1 = Conv2D(ch, (3, 3), kernel_initializer='he_normal', padding='same') (inputs)
-
-
-    NameError: name 'np' is not defined
-
 
 ```python
 # Train model

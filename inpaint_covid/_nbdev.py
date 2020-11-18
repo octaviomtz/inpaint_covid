@@ -12,7 +12,12 @@ index = {"plot_3d_2": "00_core.ipynb",
          "pad_volume_to_multiple_32": "00_core.ipynb",
          "choose_loss": "00_core.ipynb",
          "plot_4_inpaints": "00_core.ipynb",
-         "unet5": "01_unets.ipynb"}
+         "plot_inpaints_pairs": "00_core.ipynb",
+         "unet5": "01_unets.ipynb",
+         "unet4": "01_unets.ipynb",
+         "unet3": "01_unets.ipynb",
+         "unet2": "01_unets.ipynb",
+         "get_architecture": "01_unets.ipynb"}
 
 modules = ["core.py",
            "unets.py"]

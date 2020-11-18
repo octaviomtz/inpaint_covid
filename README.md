@@ -70,8 +70,14 @@ b=np.swapaxes(np.swapaxes(ct_mask_small,1,2),0,1)
 plot_3d_2(a, b, .5, detail_speed=8, detail_speed2=8, figsize=(4,5))
 ```
 
+    /mnt/c/Users/octav/Documents/version_control/covid19/inpaint_covid/inpaint_covid/core.py:56: FutureWarning: marching_cubes_lewiner is deprecated in favor of marching_cubes. marching_cubes_lewiner will be removed in version 0.19
+      verts, faces, _, _ = measure.marching_cubes_lewiner(p, threshold, step_size=detail_speed)
+    /mnt/c/Users/octav/Documents/version_control/covid19/inpaint_covid/inpaint_covid/core.py:57: FutureWarning: marching_cubes_lewiner is deprecated in favor of marching_cubes. marching_cubes_lewiner will be removed in version 0.19
+      verts2, faces2, _, _ = measure.marching_cubes_lewiner(p2, threshold, step_size=detail_speed2)
 
-![png](docs/images/output_13_0.png)
+
+
+![png](docs/images/output_13_1.png)
 
 
 ### 3. Get the masks
@@ -118,6 +124,8 @@ EPOCHS = 2
 EPOCHS_sneak_peek = 2
 lr_value = 0.0001
 LR_REDUCE = 1
+archi = 5
+ch_init = 32
 ```
 
 ```python
@@ -143,7 +151,7 @@ results_all = []
 predicted_all = []
 epochs_saved = [0]
 previous_epochs = 0
-model = unet5(ct_small)
+model = get_architecture(ct_small, 4, ch_init, g_noise, act_max_value, act_out_max_value)
 opt = tf.keras.optimizers.Adam(lr_value) 
 loss_masked, mask_used = choose_loss(mask_target, mask_target2, mask_target3, LOSS_USED=0)
 model.compile(optimizer=opt, loss=loss_masked)
@@ -179,7 +187,7 @@ for i in tqdm(range(2)):
 ```python
 # If using only one slice SLICE = 0
 SLICE = 100
-plot_4_inpaints(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], act_max_value, act_out_max_value, results_all, g_noise, blend='blend', slice_mask=SLICE)
+plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], act_max_value, act_out_max_value, results_all, g_noise, archi, ch_init, blend='blend', slice_mask=SLICE)
 ```
 
 

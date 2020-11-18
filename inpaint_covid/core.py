@@ -202,11 +202,13 @@ def plot_4_inpaints(predicted_all, epochs_saved, target, mask_used, target_mask3
     fig.tight_layout()
 
 # Cell
-def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_mask3, act_max_value, act_out_max_value, results_all, g_noise, archi, ch_init, blend='add', slice_mask=0):
+def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_mask3, results_all, parameters, blend='add', slice_mask=0, path_dest='', save=False, version='vx'):
+    g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version = parameters
     color1 = "#3F5D7D"
     color2 = "#990F02"
+    color3 = "#ffe84f"
     widths = [1,2,2,2,2]
-    fig=plt.figure(figsize=(18,6));
+    fig=plt.figure(figsize=(24,8));
     gs=GridSpec(2,5, width_ratios=widths)
     ax1=fig.add_subplot(gs[:,0]) # First row, first column
     ax2=fig.add_subplot(gs[0,1]) # First row, second column
@@ -218,22 +220,22 @@ def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_m
     ax8=fig.add_subplot(gs[1,3])
     ax9=fig.add_subplot(gs[1,4])
 
-
     label0 = f'epochs={epochs_saved[-4]}'
     label1 = f'epochs={epochs_saved[-3]}'
     label2 = f'epochs={epochs_saved[-2]}'
-    label3 = f'epochs={epochs_saved[-1]}\nact_max_value={act_max_value}\nact_out_max_value={act_out_max_value}\ng_noise={g_noise}\narchi=unet{archi}\nch_init={ch_init}'
-#     ax1.imshow(mask_used[0,:,:,slice_mask], vmin=0, vmax=1)
+    label3 = f'epochs={epochs_saved[-1]}\nact_max_value={act_max_value}\nact_out_max_value={act_out_max_value}\ng_noise={g_noise}\narchi=unet{archi}\nch_init={ch_init}\nlr={lr_value}'
+    name_fig = f'archi=unet{archi}_ch_init={ch_init}_lr={lr_value}_ep={epochs_saved[-1]}_act_max={act_max_value}_act_out_max={act_out_max_value}_g_noise={g_noise}'
+
     for i in [ax2, ax3, ax4, ax5, ax6, ax7, ax8, ax9]: i.axis('off')
     y_text = 20
     fontsize=12
-    ax2.imshow(predicted_all[-4], vmin=0, vmax=1); ax2.text(10, y_text, label0, c='r', fontsize=fontsize)
+    ax2.imshow(predicted_all[-4], vmin=0, vmax=1); ax2.text(10, y_text, label0, c=color3, fontsize=fontsize)
     ax3.imshow(np.abs(target - predicted_all[-4]), vmin=0, vmax=1) if blend=='substract' else ax3.imshow(target*~target_mask3 + predicted_all[-4]*target_mask3, vmin=0, vmax=1)
-    ax4.imshow(predicted_all[-3], vmin=0, vmax=1); ax4.text(10, y_text, label1, c='r', fontsize=fontsize)
+    ax4.imshow(predicted_all[-3], vmin=0, vmax=1); ax4.text(10, y_text, label1, c=color3, fontsize=fontsize)
     ax5.imshow(np.abs(target - predicted_all[-3]), vmin=0, vmax=1) if blend=='substract' else ax5.imshow(target*~target_mask3 + predicted_all[-3]*target_mask3, vmin=0, vmax=1)
-    ax6.imshow(predicted_all[-2], vmin=0, vmax=1); ax6.text(10, y_text, label2, c='r', fontsize=fontsize)
+    ax6.imshow(predicted_all[-2], vmin=0, vmax=1); ax6.text(10, y_text, label2, c=color3, fontsize=fontsize)
     ax7.imshow(np.abs(target - predicted_all[-2]), vmin=0, vmax=1) if blend=='substract' else ax7.imshow(target*~target_mask3 + predicted_all[-2]*target_mask3, vmin=0, vmax=1)
-    ax8.imshow(predicted_all[-1], vmin=0, vmax=1); ax8.text(10, y_text+100, label3, c='r', fontsize=fontsize)
+    ax8.imshow(predicted_all[-1], vmin=0, vmax=1); ax8.text(10, y_text+90, label3, c=color3, fontsize=fontsize)
     ax9.imshow(np.abs(target - predicted_all[-1]), vmin=0, vmax=1) if blend=='substract' else ax9.imshow(target*~target_mask3 + predicted_all[-1]*target_mask3, vmin=0, vmax=1)
     ax1.semilogy(results_all, label = label3, color=color1)
     ax1.semilogy(np.asarray(epochs_saved)[1:]-1, np.asarray(results_all)[np.asarray(epochs_saved)[1:]-1], marker='.', linestyle='None', markersize=20, color=color1)
@@ -244,3 +246,6 @@ def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_m
     ax1.get_xaxis().tick_bottom()
     ax1.get_yaxis().tick_left()
     fig.tight_layout()
+    if save:
+        fig.savefig(f'{path_dest}inpain_covid_{version}_{name_fig}.png')
+        plt.close()

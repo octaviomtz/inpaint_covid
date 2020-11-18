@@ -126,6 +126,8 @@ lr_value = 0.0001
 LR_REDUCE = 1
 archi = 5
 ch_init = 32
+version='v2.4'
+parameters = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version]
 ```
 
 ```python
@@ -151,7 +153,7 @@ results_all = []
 predicted_all = []
 epochs_saved = [0]
 previous_epochs = 0
-model = get_architecture(ct_small, 4, ch_init, g_noise, act_max_value, act_out_max_value)
+model = get_architecture(ct_small, archi, ch_init, g_noise, act_max_value, act_out_max_value)
 opt = tf.keras.optimizers.Adam(lr_value) 
 loss_masked, mask_used = choose_loss(mask_target, mask_target2, mask_target3, LOSS_USED=0)
 model.compile(optimizer=opt, loss=loss_masked)
@@ -187,7 +189,7 @@ for i in tqdm(range(2)):
 ```python
 # If using only one slice SLICE = 0
 SLICE = 100
-plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], act_max_value, act_out_max_value, results_all, g_noise, archi, ch_init, blend='blend', slice_mask=SLICE)
+plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], results_all, parameters, blend='blend', slice_mask=SLICE, path_dest=path_dest, save=True)
 ```
 
 

@@ -38,8 +38,10 @@ filename = 'covid19-A-0003_ct.nii.gz'
 # from google.colab import drive
 # drive.mount('/content/drive')
 # path_source = '/content/drive/My Drive/Datasets/covid19/COVID-19-20_v2/'
+# path_dest = '/content/drive/My Drive/KCL/covid19/inpainting_results/'
 # if local
 path_source = '/mnt/c/Users/octav/Documents/Datasets/COVID-19-20_v2/'
+path_dest = '/mnt/c/Users/octav/Documents/Datasets/COVID-19-20_v2/inpainting_results/'
 ct, ct_mask, ct_seg = read_covid_CT_and_mask(path_source, filename)
 ct, ct_mask, ct_seg = normalize_rotate(ct, ct_mask, ct_seg)
 ```
@@ -70,14 +72,8 @@ b=np.swapaxes(np.swapaxes(ct_mask_small,1,2),0,1)
 plot_3d_2(a, b, .5, detail_speed=8, detail_speed2=8, figsize=(4,5))
 ```
 
-    /mnt/c/Users/octav/Documents/version_control/covid19/inpaint_covid/inpaint_covid/core.py:56: FutureWarning: marching_cubes_lewiner is deprecated in favor of marching_cubes. marching_cubes_lewiner will be removed in version 0.19
-      verts, faces, _, _ = measure.marching_cubes_lewiner(p, threshold, step_size=detail_speed)
-    /mnt/c/Users/octav/Documents/version_control/covid19/inpaint_covid/inpaint_covid/core.py:57: FutureWarning: marching_cubes_lewiner is deprecated in favor of marching_cubes. marching_cubes_lewiner will be removed in version 0.19
-      verts2, faces2, _, _ = measure.marching_cubes_lewiner(p2, threshold, step_size=detail_speed2)
 
-
-
-![png](docs/images/output_13_1.png)
+![png](docs/images/output_13_0.png)
 
 
 ### 3. Get the masks
@@ -127,7 +123,8 @@ LR_REDUCE = 1
 archi = 5
 ch_init = 32
 version='v2.4'
-parameters = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename, path_dest]
+SLICE=100
+parameters = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename, path_dest, SLICE]
 ```
 
 ```python
@@ -188,8 +185,7 @@ for i in tqdm(range(2)):
 
 ```python
 # If using only one slice SLICE = 0
-SLICE = 100
-plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], results_all, parameters, blend='blend', slice_mask=SLICE, path_dest=path_dest, save=True)
+plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], results_all, parameters, blend='blend', save=False)
 ```
 
 

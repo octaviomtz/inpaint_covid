@@ -11,6 +11,8 @@ import argparse
 
 # parameters
 parser = argparse.ArgumentParser()
+parser.add_argument('path_source', type=str)
+parser.add_argument('path_dest', type=str)
 parser.add_argument('filename', type=str)
 parser.add_argument('archi', type=int)
 parser.add_argument('ch_init', type=int)
@@ -24,8 +26,12 @@ parser.add_argument('EPOCHS', type=int)
 parser.add_argument('EPOCHS_sneak_peek', type=int)
 parser.add_argument('LR_REDUCE', type=float)
 parser.add_argument('version', type=str)
+parser.add_argument('SLICE', type=str)
+
 args = parser.parse_args()
 
+path_source = args.path_source
+path_dest = args.path_dest
 filename = args.filename
 archi = args.archi
 ch_init = args.ch_init
@@ -39,14 +45,15 @@ EPOCHS = args.EPOCHS
 EPOCHS_sneak_peek = args.EPOCHS_sneak_peek
 LR_REDUCE = args.LR_REDUCE
 version = args.version
-parameters = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename]
+SLICE = args.SLICE
+parameters = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename, path_dest, SLICE]
 
 print(filename, archi, ch_init)
 
 # read files
 drive.mount('/content/drive')
-path_source = '/content/drive/My Drive/Datasets/covid19/COVID-19-20_v2/'
-path_dest = '/content/drive/My Drive/KCL/covid19/inpainting_results/'
+# path_source = '/content/drive/My Drive/Datasets/covid19/COVID-19-20_v2/'
+# path_dest = '/content/drive/My Drive/KCL/covid19/inpainting_results/'
 
 # read and preprocess
 ct, ct_mask, ct_seg = read_covid_CT_and_mask(path_source, filename)
@@ -103,7 +110,7 @@ for i in tqdm(range(LOOP_MASKS)):
     K.set_value(model.optimizer.learning_rate, lr_value)
 
 # make figure and save it
-SLICE = 100
-plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], results_all, parameters, blend='blend', slice_mask=SLICE, path_dest=path_dest, save=True, version=version)
+
+plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], results_all, parameters, blend='blend', save=True, version=version)
 
 

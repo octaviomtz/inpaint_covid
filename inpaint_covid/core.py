@@ -202,8 +202,8 @@ def plot_4_inpaints(predicted_all, epochs_saved, target, mask_used, target_mask3
     fig.tight_layout()
 
 # Cell
-def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_mask3, results_all, parameters, blend='add', slice_mask=0, path_dest='', save=False, version='vx'):
-    g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename = parameters
+def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_mask3, results_all, parameters, blend='add', save=False, version='vx'):
+    g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename, path_dest, SLICE = parameters
     color1 = "#3F5D7D"
     color2 = "#990F02"
     color3 = "#ffe84f"
@@ -224,7 +224,7 @@ def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_m
     label1 = f'epochs={epochs_saved[-3]}'
     label2 = f'epochs={epochs_saved[-2]}'
     label3 = f'epochs={epochs_saved[-1]}\nact_max_value={act_max_value}\nact_out_max_value={act_out_max_value}\ng_noise={g_noise}\narchi=unet{archi}\nch_init={ch_init}\nlr={lr_value}'
-    name_fig = f'archi=unet{archi}_ch_init={ch_init}_lr={lr_value}_ep={epochs_saved[-1]}_act_max={act_max_value}_act_out_max={act_out_max_value}_g_noise={g_noise}'
+    name_fig = f'archi=unet{archi}_ch_init={ch_init}_lr={lr_value}_ep={epochs_saved[-1]}_act_max={act_max_value}_act_out_max={act_out_max_value}_g_noise={g_noise}_slice={SLICE}'
 
     for i in [ax2, ax3, ax4, ax5, ax6, ax7, ax8, ax9]: i.axis('off')
     y_text = 20

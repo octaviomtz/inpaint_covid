@@ -1,4 +1,4 @@
-from inpaint_covid.inpaint_covid import *
+from inpaint_covid import *
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import label

@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import label
 import tensorflow as tf
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 from tqdm.keras import TqdmCallback
 from tensorflow.keras import backend as K
 from google.colab import drive
@@ -39,6 +39,7 @@ EPOCHS = args.EPOCHS
 EPOCHS_sneak_peek = args.EPOCHS_sneak_peek
 LR_REDUCE = args.LR_REDUCE
 version = args.version
+parameters = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename]
 
 print(filename, archi, ch_init)
 

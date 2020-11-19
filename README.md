@@ -195,7 +195,3 @@ plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0
 
 ![png](docs/images/output_24_0.png)
 
-
-```python
-from tqdm import t
-```

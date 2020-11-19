@@ -203,7 +203,7 @@ def plot_4_inpaints(predicted_all, epochs_saved, target, mask_used, target_mask3
 
 # Cell
 def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_mask3, results_all, parameters, blend='add', slice_mask=0, path_dest='', save=False, version='vx'):
-    g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version = parameters
+    g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename = parameters
     color1 = "#3F5D7D"
     color2 = "#990F02"
     color3 = "#ffe84f"
@@ -247,5 +247,5 @@ def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_m
     ax1.get_yaxis().tick_left()
     fig.tight_layout()
     if save:
-        fig.savefig(f'{path_dest}inpain_covid_{version}_{name_fig}.png')
+        fig.savefig(f'{path_dest}{filename}_{version}_{name_fig}.png')
         plt.close()

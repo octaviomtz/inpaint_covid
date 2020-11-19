@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import label
 import tensorflow as tf
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 from tqdm.keras import TqdmCallback
 from tensorflow.keras import backend as K
 from google.colab import drive
@@ -53,8 +53,6 @@ ct, ct_mask, ct_seg = normalize_rotate(ct, ct_mask, ct_seg)
 labelled, nr = label(ct_seg>0)
 largest_component = (labelled == (np.bincount(labelled.flat)[1:].argmax() + 1))
 ct_small, ct_mask_small, ct_seg_small = pad_volume_to_multiple_32(largest_component, ct, ct_mask, ct_seg)
-
-assert 1==2
 
 #this part apparently is not used
 labelled, nr = label(ct_seg_small>0)

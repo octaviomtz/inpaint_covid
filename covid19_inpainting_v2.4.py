@@ -26,7 +26,7 @@ parser.add_argument('EPOCHS', type=int)
 parser.add_argument('EPOCHS_sneak_peek', type=int)
 parser.add_argument('LR_REDUCE', type=float)
 parser.add_argument('version', type=str)
-parser.add_argument('SLICE', type=str)
+parser.add_argument('SLICE', type=int)
 
 args = parser.parse_args()
 

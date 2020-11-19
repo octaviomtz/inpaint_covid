@@ -1,4 +1,4 @@
-# from inpaint_covid.inpaint_covid import *
+from inpaint_covid.inpaint_covid import *
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import label
@@ -6,7 +6,7 @@ import tensorflow as tf
 from tqdm.notebook import tqdm
 from tqdm.keras import TqdmCallback
 from tensorflow.keras import backend as K
-# from google.colab import drive
+from google.colab import drive
 import argparse
 
 # parameters

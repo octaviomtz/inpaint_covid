@@ -27,6 +27,8 @@ parser.add_argument('EPOCHS_sneak_peek', type=int)
 parser.add_argument('LR_REDUCE', type=float)
 parser.add_argument('version', type=str)
 parser.add_argument('SLICE', type=int)
+parser.add_argument('SLICE2', type=int)# extraplots
+parser.add_argument('SLICE3', type=int)# extraplots
 
 args = parser.parse_args()
 
@@ -46,7 +48,11 @@ EPOCHS_sneak_peek = args.EPOCHS_sneak_peek
 LR_REDUCE = args.LR_REDUCE
 version = args.version
 SLICE = args.SLICE
+SLICE2 = args.SLICE2# extraplots
+SLICE3 = args.SLICE3# extraplots
 parameters = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename, path_dest, SLICE]
+parameters2 = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename, path_dest, SLICE2]# extraplots
+parameters3 = [g_noise, act_max_value, act_out_max_value, NOISE_REDUCTION, EPOCHS, EPOCHS_sneak_peek, lr_value, LR_REDUCE, archi, ch_init, version, filename, path_dest, SLICE3]# extraplots
 
 print(filename, archi, ch_init)
 
@@ -112,5 +118,8 @@ for i in tqdm(range(LOOP_MASKS)):
 # make figure and save it
 
 plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], results_all, parameters, blend='blend', save=True, version=version)
+# extraplots
+plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE2], epochs_saved, target[0,...,SLICE2], mask_used, mask_target3[0,...,SLICE2], results_all, parameters, blend='blend', save=True, version=version)
+plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE3], epochs_saved, target[0,...,SLICE3], mask_used, mask_target3[0,...,SLICE3], results_all, parameters, blend='blend', save=True, version=version)
 
 

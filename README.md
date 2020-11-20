@@ -72,8 +72,14 @@ b=np.swapaxes(np.swapaxes(ct_mask_small,1,2),0,1)
 plot_3d_2(a, b, .5, detail_speed=8, detail_speed2=8, figsize=(4,5))
 ```
 
+    /mnt/c/Users/octav/Documents/version_control/covid19/inpaint_covid/inpaint_covid/core.py:56: FutureWarning: marching_cubes_lewiner is deprecated in favor of marching_cubes. marching_cubes_lewiner will be removed in version 0.19
+      verts, faces, _, _ = measure.marching_cubes_lewiner(p, threshold, step_size=detail_speed)
+    /mnt/c/Users/octav/Documents/version_control/covid19/inpaint_covid/inpaint_covid/core.py:57: FutureWarning: marching_cubes_lewiner is deprecated in favor of marching_cubes. marching_cubes_lewiner will be removed in version 0.19
+      verts2, faces2, _, _ = measure.marching_cubes_lewiner(p2, threshold, step_size=detail_speed2)
 
-![png](docs/images/output_13_0.png)
+
+
+![png](docs/images/output_13_1.png)
 
 
 ### 3. Get the masks
@@ -135,14 +141,13 @@ target = np.expand_dims(ct_small,0)
 
 ```python
 # USE THIS TO WORK WITH ONLY ONE SLICE
-# SLICE = 100
-# mask_target = np.expand_dims(mask_target[...,SLICE],-1)
-# mask_target2 = np.expand_dims(mask_target2[...,SLICE],-1)
-# mask_target3 = np.expand_dims(mask_target3[...,SLICE],-1)
-# input_noise = np.expand_dims(input_noise[...,SLICE],-1)
-# target = np.expand_dims(target[...,SLICE],-1)
-# IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS  = np.shape(target[0])
-# print(np.shape(mask_target),np.shape(mask_target2),np.shape(mask_target3),np.shape(input_noise), np.shape(target))
+mask_target = np.expand_dims(mask_target[...,SLICE],-1)
+mask_target2 = np.expand_dims(mask_target2[...,SLICE],-1)
+mask_target3 = np.expand_dims(mask_target3[...,SLICE],-1)
+input_noise = np.expand_dims(input_noise[...,SLICE],-1)
+target = np.expand_dims(target[...,SLICE],-1)
+IMG_HEIGHT, IMG_WIDTH, IMG_CHANNELS  = np.shape(target[0])
+SLICE = 0 # refer to the only slice available
 ```
 
 ```python
@@ -150,7 +155,7 @@ results_all = []
 predicted_all = []
 epochs_saved = [0]
 previous_epochs = 0
-model = get_architecture(ct_small, archi, ch_init, g_noise, act_max_value, act_out_max_value)
+model = get_architecture(target[0], archi, ch_init, g_noise, act_max_value, act_out_max_value)
 opt = tf.keras.optimizers.Adam(lr_value) 
 loss_masked, mask_used = choose_loss(mask_target, mask_target2, mask_target3, LOSS_USED=0)
 model.compile(optimizer=opt, loss=loss_masked)

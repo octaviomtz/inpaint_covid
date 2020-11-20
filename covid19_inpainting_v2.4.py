@@ -119,7 +119,7 @@ for i in tqdm(range(LOOP_MASKS)):
 
 plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE], epochs_saved, target[0,...,SLICE], mask_used, mask_target3[0,...,SLICE], results_all, parameters, blend='blend', save=True, version=version)
 # extraplots
-plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE2], epochs_saved, target[0,...,SLICE2], mask_used, mask_target3[0,...,SLICE2], results_all, parameters, blend='blend', save=True, version=version)
-plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE3], epochs_saved, target[0,...,SLICE3], mask_used, mask_target3[0,...,SLICE3], results_all, parameters, blend='blend', save=True, version=version)
+plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE2], epochs_saved, target[0,...,SLICE2], mask_used, mask_target3[0,...,SLICE2], results_all, parameters2, blend='blend', save=True, version=version)
+plot_inpaints_pairs(np.asarray(predicted_all)[...,SLICE3], epochs_saved, target[0,...,SLICE3], mask_used, mask_target3[0,...,SLICE3], results_all, parameters3, blend='blend', save=True, version=version)
 
 

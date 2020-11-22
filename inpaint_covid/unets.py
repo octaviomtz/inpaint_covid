@@ -316,7 +316,7 @@ def unet2(ct_small, ch=32, g_noise= 0.3, act_max_value = 1, act_out_max_value = 
 
     out_inter = c2
 
-    u3 = Conv2DTranspose(ch//2, (2, 2), strides=(2, 2), padding='same') (c4)
+    u3 = Conv2DTranspose(ch//2, (2, 2), strides=(2, 2), padding='same') (c2)
     u3 = concatenate([u3, c1], axis=3)
     c3 = Conv2D(ch, (3, 3), kernel_initializer='he_normal', padding='same') (u3)
     if (g_noise > 0): c3 = GaussianNoise(g_noise) (c3)

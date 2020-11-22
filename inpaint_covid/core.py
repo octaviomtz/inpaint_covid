@@ -247,5 +247,7 @@ def plot_inpaints_pairs(predicted_all, epochs_saved, target, mask_used, target_m
     ax1.get_yaxis().tick_left()
     fig.tight_layout()
     if save:
-        fig.savefig(f'{path_dest}{filename}_{version}_{name_fig}.png')
+        save_name = f'{path_dest}{filename}_{version}_{name_fig}.png'
+        print(f'saving {save_name}')
+        fig.savefig(save_name)
         plt.close()

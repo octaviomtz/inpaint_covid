@@ -92,7 +92,7 @@ results_all = []
 predicted_all = []
 epochs_saved = [0]
 previous_epochs = 0
-model = get_architecture(ct_small, archi, ch_init, g_noise, act_max_value, act_out_max_value)
+model = get_architecture(target[0], archi, ch_init, g_noise, act_max_value, act_out_max_value)
 opt = tf.keras.optimizers.Adam(lr_value) 
 loss_masked, mask_used = choose_loss(mask_target, mask_target2, mask_target3, LOSS_USED=0)
 model.compile(optimizer=opt, loss=loss_masked)
